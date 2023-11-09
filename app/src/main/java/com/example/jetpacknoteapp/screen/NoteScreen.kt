@@ -1,5 +1,6 @@
 package com.example.jetpacknoteapp.screen
 
+import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -26,6 +27,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -49,6 +51,7 @@ fun NoteScreen(
     var description by remember {
         mutableStateOf("")
     }
+    val context = LocalContext.current
 
     Column(
         modifier = Modifier.padding(6.dp)
@@ -82,17 +85,18 @@ fun NoteScreen(
                 })
             NoteButton(text = "Save", onClick = {
                 if (title.isNotEmpty() && description.isNotEmpty()) {
-
+                    onAddNote(Note(title = title, description = description))
 
                     // Clearing the Fields.
                     title = ""
                     description = ""
+                    Toast.makeText(context, "Note Added", Toast.LENGTH_SHORT).show()
                 }
             })
             Divider(modifier = Modifier.padding(10.dp))
             LazyColumn {
                 items(notes) { note ->
-                    NoteRow(note = note, onNoteClicker = {})
+                    NoteRow(note = note, onNoteClicked = { onRemoveNote(note) })
                 }
             }
 
@@ -101,7 +105,7 @@ fun NoteScreen(
 }
 
 @Composable
-fun NoteRow(modifier: Modifier = Modifier, note: Note, onNoteClicker: (Note) -> Unit) {
+fun NoteRow(modifier: Modifier = Modifier, note: Note, onNoteClicked: (Note) -> Unit) {
     Surface(
         modifier = Modifier
             .padding(4.dp)
@@ -112,13 +116,16 @@ fun NoteRow(modifier: Modifier = Modifier, note: Note, onNoteClicker: (Note) -> 
     ) {
         Column(
             modifier
-                .clickable { }
+                .clickable { onNoteClicked(note) }
                 .padding(horizontal = 14.dp, vertical = 6.dp),
-                horizontalAlignment = Alignment.Start
-            ) {
+            horizontalAlignment = Alignment.Start
+        ) {
             Text(text = note.title, style = MaterialTheme.typography.titleSmall)
             Text(text = note.description, style = MaterialTheme.typography.titleMedium)
-            Text(text = note.entryDate.format(DateTimeFormatter.ofPattern("EEE, d MMM")), style = MaterialTheme.typography.labelSmall)
+            Text(
+                text = note.entryDate.format(DateTimeFormatter.ofPattern("EEE, d MMM")),
+                style = MaterialTheme.typography.labelSmall
+            )
 
         }
     }
