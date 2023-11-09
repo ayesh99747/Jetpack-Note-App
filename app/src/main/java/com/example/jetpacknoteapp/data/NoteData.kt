@@ -10,12 +10,14 @@ class NoteDataSource {
             ),
             Note(title = "Keep at it...", description = "Sometimes things just happen"),
             Note(title = "A movie day", description = "Watching a movie with family today"),
-            Note(title = "A movie day", description = "Watching a movie with family today"),
-            Note(title = "A movie day", description = "Watching a movie with family today"),
-            Note(title = "A movie day", description = "Watching a movie with family today"),
-            Note(title = "A movie day", description = "Watching a movie with family today"),
-            Note(title = "A movie day", description = "Watching a movie with family today"),
-            Note(title = "A movie day", description = "Watching a movie with family")
+            /*
+                        Note(title = "A movie day", description = "Watching a movie with family today"),
+                        Note(title = "A movie day", description = "Watching a movie with family today"),
+                        Note(title = "A movie day", description = "Watching a movie with family today"),
+                        Note(title = "A movie day", description = "Watching a movie with family today"),
+                        Note(title = "A movie day", description = "Watching a movie with family today"),
+                        Note(title = "A movie day", description = "Watching a movie with family")
+            */
         )
     }
 }
